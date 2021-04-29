@@ -1,0 +1,15 @@
+{
+  "name": "sf-meta-tool",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "retrieve": "node ./src/retrieveMeta.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "jsforce": "*",
+    "sqlite3": "^5.0.2"
+  }
+}
