@@ -1,6 +1,6 @@
 # About
 * Retrieve sObject Metadata from yout Salesforce organization
-* Save `SObject Fileds` info to Database
+* Save `SObject Fileds` info to Database(`sf-meta.sqlite`)
 
 ## Install
 ```
