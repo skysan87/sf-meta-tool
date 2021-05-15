@@ -20,6 +20,7 @@ class SaveMetadataTask {
         field_api: f.fullName,
         field_label: f.label,
         field_type: f.type,
+        text_length: f.length
       })
 
       // picklist

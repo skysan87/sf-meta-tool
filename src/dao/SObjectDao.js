@@ -15,6 +15,7 @@ class SObjectDao {
             , field_api text
             , field_label text
             , field_type text
+            , text_length integer
             , valueset text
             , formula text
             , is_custom boolean
@@ -38,6 +39,7 @@ class SObjectDao {
             v.field_api,
             v.field_label,
             v.field_type,
+            v.text_length,
             v.valueset,
             v.formula,
             v.isCustom
@@ -52,7 +54,7 @@ class SObjectDao {
         }, '')
 
         db.all(`INSERT INTO ${TABLE_NAME}
-          (object_api, object_label, field_api, field_label, field_type, valueset, formula, is_custom)
+          (object_api, object_label, field_api, field_label, field_type, text_length, valueset, formula, is_custom)
           VALUES ${placeholder}`,
           data.flat()
         )
