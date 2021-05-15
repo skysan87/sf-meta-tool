@@ -31,7 +31,7 @@ class SaveMetadataTask {
       }
 
       // lookup
-      if (typeof f.type === 'String' && f.type.toLowerCase() === 'lookup') {
+      if (f.hasOwnProperty('type') && f.type.toLowerCase() === 'lookup') {
         field.field_type = `${f.type}(${f.referenceTo})`
       }
 

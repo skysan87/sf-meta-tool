@@ -5,7 +5,7 @@ class SObjectField {
     this.field_api = param.field_api || ''
     this.field_label = param.field_label || ''
     this.field_type = param.field_type || ''
-    this.text_length = param.text_length
+    this.text_length = param.text_length || null
     this.valueset = null
     this.formula = null
   }
