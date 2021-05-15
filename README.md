@@ -12,12 +12,16 @@ $ npm install
   * see `node-config`
 * Set Login Info
 
-```js
+```json
 {
   "Account": {
     "user": "",
     "password": "",
-    "security_token": "" // this depends on organization.
+    "security_token": "", // this depends on organization.
+    "sandbox": true
+  },
+  "ObjectList": {
+    "retrieve": [ "Account", "Contact"] // set retrieve targets.
   }
 }
 ```

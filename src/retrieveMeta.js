@@ -6,13 +6,14 @@ const SANDBOX_CON = { loginUrl: 'https://test.salesforce.com' }
 
 /* === SET LOGIN INFOMATION === */
 const account = config.get('Account')
-const USER = account.user || ''
-const PASSWORD = account.password || ''
-const SECURITY_TOKEN = account.security_token || ''
+const USER = account.user
+const PASSWORD = account.password
+const SECURITY_TOKEN = account.security_token
+const IS_SANDBOX = account.sandbox
 /* ============================ */
 
-async function main(sandbox = false) {
-  let conn = sandbox
+async function main(isSandbox = false) {
+  let conn = isSandbox
     ? new jsforce.Connection(SANDBOX_CON)
     : new jsforce.Connection()
 
@@ -21,11 +22,16 @@ async function main(sandbox = false) {
     await conn.login(USER, PASSWORD + SECURITY_TOKEN)
 
     // NOTE: care about "Metadata limits for the Metadata API"
-    const metadatas = await conn.metadata.read('CustomObject', ['Account'])
+    const objectConfig = config.get('ObjectList')
+    const metadatas = await conn.metadata.read('CustomObject', objectConfig.retrieve)
 
-    metadatas.forEach(async (meta) => {
-      await SaveMetadataTask.run(meta)
-    })
+    if (Array.isArray(metadatas)) {
+      metadatas.forEach(async (meta) => {
+        await SaveMetadataTask.run(meta)
+      })
+    } else {
+      await SaveMetadataTask.run(metadatas)
+    }
 
   } catch (error) {
     console.error(error)
@@ -38,4 +44,4 @@ async function main(sandbox = false) {
   }
 }
 
-main()
+main(IS_SANDBOX)
