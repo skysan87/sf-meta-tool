@@ -46,7 +46,7 @@ class SObjectDao {
     const db = DB.get()
     return new Promise((resolve, reject) => {
       try {
-        db.run(`DROP TABLE ${TABLE_NAME}`)
+        db.run(`DROP TABLE IF EXISTS ${TABLE_NAME}`)
         return resolve()
       } catch (err) {
         return reject(err)
