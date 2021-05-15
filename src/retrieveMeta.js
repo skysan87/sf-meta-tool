@@ -34,16 +34,29 @@ async function main(sandbox = false) {
 
     metadata.fields.forEach(async (f) => {
       const field = new SObjectField({
-        api_name: f.fullName,
-        label: f.label,
-        type: f.type,
+        object_api: metadata.fullName,
+        object_label: metadata.label,
+        field_api: f.fullName,
+        field_label: f.label,
+        field_type: f.type,
       })
 
-      // pickup list
+      // picklist
       if (f.hasOwnProperty('valueSet')) {
         field.valueset = f.valueSet.valueSetDefinition.value
           .map((list) => list.label)
           .join(';')
+      }
+
+      // lookup
+      if (f.type.toLowerCase() === 'lookup') {
+        field.field_type = `${f.type}(${f.referenceTo})`
+      }
+
+      // formula
+      if (f.hasOwnProperty('formula')) {
+        field.field_type = `formula(${f.type})`
+        field.formula = f.formula
       }
 
       insertData.push(field)

@@ -10,10 +10,14 @@ class SObjectDao {
       try {
         db.serialize(() => {
           db.run(`create table if not exists ${TABLE_NAME} (
-            api_name text
-            , label text
-            , type text
+            object_api text
+            , object_label text
+            , field_api text
+            , field_label text
+            , field_type text
             , valueset text
+            , formula text
+            , is_custom boolean
           )`)
         })
         return resolve()
@@ -29,10 +33,14 @@ class SObjectDao {
       try {
         const data = sObjects.map(v => {
           return [
-            v.api_name,
-            v.label,
-            v.type,
-            v.valueset
+            v.object_api,
+            v.object_label,
+            v.field_api,
+            v.field_label,
+            v.field_type,
+            v.valueset,
+            v.formula,
+            v.isCustom
           ]
         })
 
@@ -44,7 +52,7 @@ class SObjectDao {
         }, '')
 
         db.all(`INSERT INTO ${TABLE_NAME}
-          (api_name, label, type, valueset)
+          (object_api, object_label, field_api, field_label, field_type, valueset, formula, is_custom)
           VALUES ${placeholder}`,
           data.flat()
         )
