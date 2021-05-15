@@ -30,6 +30,8 @@ async function main(sandbox = false) {
     // NOTE: care about "Metadata limits for the Metadata API"
     const metadata = await conn.metadata.read('CustomObject', 'Account')
 
+    const insertData = []
+
     metadata.fields.forEach(async (f) => {
       const field = new SObjectField({
         api_name: f.fullName,
@@ -41,16 +43,23 @@ async function main(sandbox = false) {
       if (f.hasOwnProperty('valueSet')) {
         field.valueset = f.valueSet.valueSetDefinition.value
           .map((list) => list.label)
-          .join(',')
+          .join(';')
       }
 
-      // save to db
-      await SObjectDao.save(field)
+      insertData.push(field)
     })
 
-    await conn.logout()
+    // save to db
+    await SObjectDao.save(insertData)
+
   } catch (error) {
     console.error(error)
+  } finally {
+    try {
+      await conn.logout()
+    } catch (error) {
+      console.error(error)
+    }
   }
 }
 

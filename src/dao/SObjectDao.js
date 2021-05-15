@@ -23,17 +23,30 @@ class SObjectDao {
     })
   }
 
-  static async save(sObject) {
+  static async save(sObjects) {
     const db = DB.get()
     return new Promise((resolve, reject) => {
       try {
-        db.run(`insert into ${TABLE_NAME}
+        const data = sObjects.map(v => {
+          return [
+            v.api_name,
+            v.label,
+            v.type,
+            v.valueset
+          ]
+        })
+
+        const placeholder = data.reduce((pre, value, index) => {
+          if (index > 0) {
+            pre += ','
+          }
+          return pre += `(?${', ?'.repeat(value.length - 1)})`
+        }, '')
+
+        db.all(`INSERT INTO ${TABLE_NAME}
           (api_name, label, type, valueset)
-          values ($api_name, $label, $type, $valueset)`,
-          sObject.api_name,
-          sObject.label,
-          sObject.type,
-          sObject.valueset
+          VALUES ${placeholder}`,
+          data.flat()
         )
         return resolve()
       } catch (err) {
