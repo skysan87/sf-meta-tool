@@ -39,7 +39,7 @@ async function main(sandbox = false) {
 
       // pickup list
       if (f.hasOwnProperty('valueSet')) {
-        field.valuset = f.valueSet.valueSetDefinition.value
+        field.valueset = f.valueSet.valueSetDefinition.value
           .map((list) => list.label)
           .join(',')
       }
