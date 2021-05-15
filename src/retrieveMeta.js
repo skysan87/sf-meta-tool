@@ -2,13 +2,15 @@ const jsforce = require('jsforce')
 const SObjectDao = require('./dao/SObjectDao')
 const DB = require('./dao/DB')
 const SObjectField = require('./entity/SObjectField')
+const config = require('config')
 
 const SANDBOX_CON = { loginUrl: 'https://test.salesforce.com' }
 
 /* === SET LOGIN INFOMATION === */
-const USER = ''
-const PASSWORD = ''
-const SECURITY_TOKEN = ''
+const account = config.get('Account')
+const USER = account.user || ''
+const PASSWORD = account.password || ''
+const SECURITY_TOKEN = account.security_token || ''
 /* ============================ */
 
 async function main(sandbox = false) {

@@ -9,6 +9,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "config": "^3.3.6",
     "jsforce": "*",
     "sqlite3": "^5.0.2"
   }

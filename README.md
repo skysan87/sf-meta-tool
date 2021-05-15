@@ -8,13 +8,18 @@ $ npm install
 ```
 
 ## Setup
-* Open `src/retrieveMeta.js`
+* Create `config/default.js`
+  * see `node-config`
 * Set Login Info
 
 ```js
-const USER = ''
-const PASSWORD = ''
-const SECURITY_TOKEN = '' // this depends on organization setting.
+{
+  "Account": {
+    "user": "",
+    "password": "",
+    "security_token": "" // this depends on organization.
+  }
+}
 ```
 
 ## Run
