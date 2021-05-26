@@ -25,9 +25,12 @@ class SaveMetadataTask {
 
       // picklist
       if (f.hasOwnProperty('valueSet')) {
-        field.valueset = f.valueSet.valueSetDefinition.value
-          .map((list) => list.label)
-          .join(';')
+        const values = f.valueSet.valueSetDefinition.value
+        if (Array.isArray(values)) {
+          field.valueset = values.map((list) => list.label).join(';')
+        } else {
+          field.valueset = values
+        }
       }
 
       // lookup
